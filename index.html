@@ -24,13 +24,210 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      	</button>
-			      	<a class="navbar-brand" href="#">Acheter ou louer</a>
-			      	
+			      	<a class="navbar-brand" href="#">Acheter ou louer</a>	
 		    	</div>
-
 			</div>
 		</nav>
-		<div>hello</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12" ng-controller="EstimCtrl">
+					<ul>
+					    <li class="err" ng-repeat="error in errors"> {{ error}} </li>
+					</ul>
+					<ul>
+					    <li class="info" ng-repeat="msg in msgs"> {{ msg}} </li>
+					</ul>
+					<div class="row">
+						<div class="col-md-5">
+							<form role="form" class="form-horizontal">
+								<h2 class="page-header">Données financières d'achat</h2>
+								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Prix d'achat</label>
+								    <div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="prix">
+										<span class="input-group-addon">€</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Durée de détention</label>
+									<div class="col-sm-6 input-group">
+										<input  class="form-control" type="number" ng-model="duree_detention">
+										<span class="input-group-addon">ans</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Apport</label>								
+									<div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="apport">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Durée prêt</label>
+									<div class="col-sm-6 input-group">
+										<input class="form-control"  type="number" ng-model="duree_pret">
+										<span class="input-group-addon">ans</span>											
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Taux du prêt</label>									
+									<div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="taux_pret">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+							</form>
+							<form role="form" class="form-horizontal">
+								<h2 class="page-header">Données macro-économiques</h2>
+								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Taux d'inflation</label>
+								    <div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="taux_inflation">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Croissance annuelle des prix</label>
+									<div class="col-sm-6 input-group">
+										<input  class="form-control" type="number" ng-model="croissance_prix">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Taux de rendement épargne</label>								
+									<div class="col-sm-6 input-group">
+										<input class="form-control"  type="number" ng-model="taux_rendement">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Croissance annuelle des loyers</label>
+									<div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="croissance_loyer">
+										<span class="input-group-addon">%</span>											
+									</div>
+								</div>
+							</form>
+							<form role="form" class="form-horizontal">
+								<h2 class="page-header">Charges et frais</h2>
+								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Frais de notaire</label>
+								    <div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="frais_notaire">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Frais d'agence</label>
+									<div class="col-sm-6 input-group">
+										<input  class="form-control" type="number" ng-model="frais_agence">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Taxe foncière</label>								
+									<div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="charge_fonciere">
+										<span class="input-group-addon">%</span>
+									</div>
+								</div>
+								<div class="form-group">
+								    <label class="col-sm-4 control-label">Travaux et maintenance</label>
+									<div class="col-sm-6 input-group">
+										<input class="form-control" type="number" ng-model="charge_copro">
+										<span class="input-group-addon">%</span>											
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-7" style="position:fixed;left:42%">
+							<button type="button" class="btn btn-default"  ng-click="getNpv()">Default</button>
+							<div class="row">
+								<div class="col-md-6">
+									<table class="table" id="table_achat">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Achat</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Intérêts d'emprunt</td>
+												<td ng-bind="npv_interet"></td>
+											</tr>
+											<tr>
+												<td>Plus-value</td>
+												<td ng-bind="npv_prix"></td>
+											</tr>
+											<tr>
+												<td>Frais d'achat</td>
+												<td ng-bind="frais_achat"></td>
+											</tr>
+											<tr>
+												<td>Frais courants</td>
+												<td ng-bind="frais_courant"></td>
+											</tr>
+											<tr class="active">
+												<td>Total</td>
+												<td ng-bind="delta_achat"></td>
+											</tr>																									
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-6">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Location</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td ng-bind="npv_loyer"></td>
+												<td>Loyer</td>
+											</tr>
+											<tr>
+												<td ng-bind="npv_epargne"></td>
+												<td>Epargne</td>
+											</tr>
+											<tr>
+												<td ng-bind="frais_location"></td>
+												<td>Frais location</td>
+											</tr>
+											<tr>
+												<td ></td>
+												<td>Frais courants</td>
+											</tr>
+											<tr class="active">
+												<td ng-bind="delta_location"></td>
+												<td>Total</td>
+											</tr>																									
+										</tbody>
+									</table>
+								</div>								
+							</div>
+							<div class="row">
+								<form role="form" class="form-horizontal">
+									<div class="form-group">
+									    <label class="col-sm-4 control-label">Equivalent loyer</label>
+									    <div class="col-sm-6 input-group">
+											<input class="form-control" type="number" ng-model="loyer">
+											<span class="input-group-addon">€</span>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					
+					</div>    
+			    </div>
+		    </div>
+	    </div>
 		
 	</body>
 </html>

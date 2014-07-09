@@ -1,39 +1,14 @@
 @CHARSET "utf-8";
 
-.ajout-espece{
-	position:relative;
-	top:30px;
-}
-.infos li{
-	margin-top:10px;
-}
-.fa{
-	margin-right:10px;
+input[type='number'] {
+    -moz-appearance:textfield;
 }
 
-.editing .comment , .edit{
-	display:none;
-}
-.editing .edit{
-	display:block;
-}
-.edit textarea{
-	width:90%;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
-.destroy{
-	display:none;
-	padding-top:0px;
-	padding-bottom:0px;
-}
-.ligne:hover .destroy{
-	display:block;
-}
-
-#descriptif li{
-	margin-top:5px;
-}
-
-#descriptif i {
-	width:20px;
+#table_achat td, #table_achat th{
+	text-align:right;
 }
