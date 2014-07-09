@@ -1,0 +1,39 @@
+@CHARSET "utf-8";
+
+.ajout-espece{
+	position:relative;
+	top:30px;
+}
+.infos li{
+	margin-top:10px;
+}
+.fa{
+	margin-right:10px;
+}
+
+.editing .comment , .edit{
+	display:none;
+}
+.editing .edit{
+	display:block;
+}
+.edit textarea{
+	width:90%;
+}
+
+.destroy{
+	display:none;
+	padding-top:0px;
+	padding-bottom:0px;
+}
+.ligne:hover .destroy{
+	display:block;
+}
+
+#descriptif li{
+	margin-top:5px;
+}
+
+#descriptif i {
+	width:20px;
+}
