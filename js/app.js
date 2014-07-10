@@ -55,10 +55,10 @@ app.controller('EstimCtrl', function ($scope){
 	$scope.apport = 30;
 	$scope.duree_pret = 20;
 	$scope.taux_pret = 3.4;
-	$scope.taux_inflation = 2;
+	$scope.taux_inflation = 1;
 	$scope.croissance_prix = 1;
-	$scope.taux_rendement = 1.5;
-	$scope.croissance_loyer = 0.5;
+	$scope.taux_rendement = 2;
+	$scope.croissance_loyer = 1;
 	$scope.frais_notaire =6.5;
 	$scope.frais_agence = 5;
 	$scope.charge_fonciere = 0.5;
@@ -135,7 +135,25 @@ app.controller('EstimCtrl', function ($scope){
 	    $scope.delta = $scope.delta_achat-$scope.delta_location;
 	    
 	}
-	
+	$scope.getScenario= function(id){
+		if(id=="3"){
+			$scope.taux_inflation = 1.7;
+			$scope.croissance_prix = 7.5;
+			$scope.taux_rendement = 3;
+			$scope.croissance_loyer = 2.7;	
+		}else if (id=="1"){
+			$scope.taux_inflation = 0.7;
+			$scope.croissance_prix = -1.8;
+			$scope.taux_rendement = 1.8;
+			$scope.croissance_loyer = 1.1;
+		}else if (id=="2"){
+			$scope.taux_inflation = 1;
+			$scope.croissance_prix = 1;
+			$scope.taux_rendement = 2;
+			$scope.croissance_loyer = 1;
+		}
+		$scope.getNpv();
+	}
 	$scope.getNpv();
 
 });

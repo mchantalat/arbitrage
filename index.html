@@ -87,9 +87,11 @@
 								<p>L'arbitrage est très sensible à ces valeurs de taux. Pour vous aider nous avons défini 3 scénarios en fonction 
 								d'historiques que vous pouvez retrouver sur le <a href="http://www.cgedd.developpement-durable.gouv.fr/prix-immobilier-evolution-1200-a1048.html" target="_blank">site du CGEDD</a>
 								<div class="btn-group" style="margin-bottom:20px">
-								  <button type="button" class="btn btn-warning">Scénario 1</button>
-								  <button type="button" class="btn btn-default">Scénario 2</button>
-								  <button type="button" class="btn btn-success">Scénario 3</button>
+								  <button type="button" class="btn btn-warning" ng-click="getScenario(1)" tooltip-placement="right" 
+								    tooltip="Tendance 2012-2014, les prix baissent, les taux d'inflation et de placement sont très bas, les loyers progressent peu" >Scénario 1</button>
+								  <button type="button" class="btn btn-default" ng-click="getScenario(2)" tooltip-placement="top" 
+								    tooltip="Scénario 1 avec stabilisation des prix après une baisse passagère entre 2012 et 2014">Scénario 2</button>
+								  <button type="button" class="btn btn-success" ng-click="getScenario(3)" tooltip-placement="left" tooltip="Tendance 2000-2010, les prix augmentent fortement et beaucoup plus vite que les loyers ou l'inflation">Scénario 3</button>
 								</div>
 								<div class="form-group">
 								    <label class="col-sm-6 control-label">Taux d'inflation</label>
@@ -161,6 +163,7 @@
 							</form>
 						</div>
 						<div class="col-md-7" style="position:fixed;left:42%">
+							<h2>Flux totaux pendant la période de détention ({{duree_detention}} ans)</h2>
 							<div class="row">
 								<div class="col-md-6">
 									<table class="table" id="table_achat">
