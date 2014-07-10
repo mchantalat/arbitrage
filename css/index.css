@@ -12,3 +12,7 @@ input::-webkit-inner-spin-button {
 #table_achat td, #table_achat th{
 	text-align:right;
 }
+
+.red{
+	color:red;
+}

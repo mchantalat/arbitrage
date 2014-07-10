@@ -41,71 +41,83 @@
 						<div class="col-md-5">
 							<form role="form" class="form-horizontal">
 								<h2 class="page-header">Données financières d'achat</h2>
-								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
+								<p>Le prix de l'appartement que vous convoitez et votre structure de financement sont des critères primoridiaux
+								dans l'arbitrage achat/location. Indiquez ici le prix d'achat de votre appartement frais d'agence inclus mais hors frais de notaire.
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Prix d'achat</label>
-								    <div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="prix">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="bottom" 
+								    tooltip="Frais d'agence inclus, hors droit de mutation et frais de notaire"></i> Prix d'achat (FAI)</label>
+								    <div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="prix" ng-change="getNpv()">
 										<span class="input-group-addon">€</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Durée de détention</label>
-									<div class="col-sm-6 input-group">
-										<input  class="form-control" type="number" ng-model="duree_detention">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="bottom" 
+								    tooltip="Possibilité de remboursement anticipé du prêt sans pénalités"></i> Durée de détention</label>
+									<div class="col-sm-4 input-group">
+										<input  class="form-control" type="number" ng-model="duree_detention" ng-change="getNpv()">
 										<span class="input-group-addon">ans</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Apport</label>								
-									<div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="apport">
+								    <label class="col-sm-6 control-label">Apport</label>								
+									<div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="apport" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Durée prêt</label>
-									<div class="col-sm-6 input-group">
-										<input class="form-control"  type="number" ng-model="duree_pret">
+								    <label class="col-sm-6 control-label">Durée prêt</label>
+									<div class="col-sm-4 input-group">
+										<input class="form-control"  type="number" ng-model="duree_pret" ng-change="getNpv()">
 										<span class="input-group-addon">ans</span>											
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Taux du prêt</label>									
-									<div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="taux_pret">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="top" 
+								    tooltip="Pour un prêt à taux fixe à mensualités constantes"></i> Taux du prêt</label>									
+									<div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="taux_pret" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 							</form>
 							<form role="form" class="form-horizontal">
 								<h2 class="page-header">Données macro-économiques</h2>
-								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
+								<p>L'arbitrage est très sensible à ces valeurs de taux. Pour vous aider nous avons défini 3 scénarios en fonction 
+								d'historiques que vous pouvez retrouver sur le <a href="http://www.cgedd.developpement-durable.gouv.fr/prix-immobilier-evolution-1200-a1048.html" target="_blank">site du CGEDD</a>
+								<div class="btn-group" style="margin-bottom:20px">
+								  <button type="button" class="btn btn-warning">Scénario 1</button>
+								  <button type="button" class="btn btn-default">Scénario 2</button>
+								  <button type="button" class="btn btn-success">Scénario 3</button>
+								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Taux d'inflation</label>
-								    <div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="taux_inflation">
+								    <label class="col-sm-6 control-label">Taux d'inflation</label>
+								    <div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="taux_inflation" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Croissance annuelle des prix</label>
-									<div class="col-sm-6 input-group">
-										<input  class="form-control" type="number" ng-model="croissance_prix">
+								    <label class="col-sm-6 control-label">Croissance annuelle des prix immobiliers</label>
+									<div class="col-sm-4 input-group">
+										<input  class="form-control" type="number" ng-model="croissance_prix" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Taux de rendement épargne</label>								
-									<div class="col-sm-6 input-group">
-										<input class="form-control"  type="number" ng-model="taux_rendement">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="right" 
+								    tooltip="Rendement d'un placement financier sans risque"></i> Taux de rendement épargne</label>								
+									<div class="col-sm-4 input-group">
+										<input class="form-control"  type="number" ng-model="taux_rendement" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Croissance annuelle des loyers</label>
-									<div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="croissance_loyer">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="right" 
+								    tooltip="Croissance en cas de relocation non prise en compte"></i> Croissance moyenne annuelle des loyers</label>
+									<div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="croissance_loyer" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>											
 									</div>
 								</div>
@@ -114,37 +126,41 @@
 								<h2 class="page-header">Charges et frais</h2>
 								<p>Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.</p>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Frais de notaire</label>
-								    <div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="frais_notaire">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="top" 
+								    tooltip="Frais de notaire et droits de mutation payés sur le prix net vendeur"></i> Frais de notaire</label>
+								    <div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="frais_notaire" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Frais d'agence</label>
-									<div class="col-sm-6 input-group">
-										<input  class="form-control" type="number" ng-model="frais_agence">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="top" 
+								    tooltip="Frais d'agence inclus dans le prix ci-dessus, mettre 0 si vous achetez en PAP"></i> Frais d'agence</label>
+									<div class="col-sm-4 input-group">
+										<input  class="form-control" type="number" ng-model="frais_agence" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Taxe foncière</label>								
-									<div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="charge_fonciere">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="top" 
+								    tooltip="Taxe foncière à la seule charge du propriétaire, la taxe d'habitation étant payée par
+								     locataire et propriétaire nous ne la prenons pas en compte"></i> Taxe foncière</label>								
+									<div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="charge_fonciere" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
 								</div>
 								<div class="form-group">
-								    <label class="col-sm-4 control-label">Travaux et maintenance</label>
-									<div class="col-sm-6 input-group">
-										<input class="form-control" type="number" ng-model="charge_copro">
+								    <label class="col-sm-6 control-label"><i class="fa fa-info-circle" tooltip-placement="top" 
+								    tooltip="Charge de coproproiété et travaux privatifs incombant au propriétaire"></i> Travaux et maintenance</label>
+									<div class="col-sm-4 input-group">
+										<input class="form-control" type="number" ng-model="charge_copro" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>											
 									</div>
 								</div>
 							</form>
 						</div>
 						<div class="col-md-7" style="position:fixed;left:42%">
-							<button type="button" class="btn btn-default"  ng-click="getNpv()">Default</button>
 							<div class="row">
 								<div class="col-md-6">
 									<table class="table" id="table_achat">
@@ -156,24 +172,29 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td>Intérêts d'emprunt</td>
-												<td ng-bind="npv_interet"></td>
+												<td><i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Part des mensualités rémunérant la banque pour vous avoir prêté de l'argent"></i> Intérêts d'emprunt</td>
+												<td ng-class="{'red': npv_interet < 0}">{{npv_interet | customCurrency}}</td>
 											</tr>
 											<tr>
-												<td>Plus-value</td>
-												<td ng-bind="npv_prix"></td>
+												<td><i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Calculée en sommant le prix de revente du bien et en retrachant le capital restant dû à la banque, 
+												la part des mensualités remboursant le capital emprunté, l'apport initial à l'achat"></i> Plus-value</td>
+												<td ng-class="{'red': npv_prix < 0}">{{npv_prix | customCurrency}}</td>
 											</tr>
 											<tr>
-												<td>Frais d'achat</td>
-												<td ng-bind="frais_achat"></td>
+												<td><i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Frais d'agence, frais de notaire et droits de mutation"></i> Frais d'achat</td>
+												<td ng-class="{'red': frais_achat < 0}">{{frais_achat | customCurrency}}</td>
 											</tr>
 											<tr>
-												<td>Frais courants</td>
-												<td ng-bind="frais_courant"></td>
+												<td><i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Taxe foncière et travaux"></i> Frais courants</td>
+												<td ng-class="{'red': frais_courant < 0}">{{frais_courant | customCurrency}}</td>
 											</tr>
 											<tr class="active">
 												<td>Total</td>
-												<td ng-bind="delta_achat"></td>
+												<td ng-class="{'red': delta_achat < 0}">{{delta_achat | customCurrency}}</td>
 											</tr>																									
 										</tbody>
 									</table>
@@ -188,23 +209,27 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td ng-bind="npv_loyer"></td>
-												<td>Loyer</td>
+												<td ng-class="{'red': npv_loyer < 0}">{{npv_loyer | customCurrency}}</td>
+												<td>Loyer <i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Loyers payés chaque mois pendant la durée de détention"></i></td>
 											</tr>
 											<tr>
-												<td ng-bind="npv_epargne"></td>
-												<td>Epargne</td>
+												<td ng-class="{'red': npv_epargne < 0}">{{npv_epargne | customCurrency}}</td>
+												<td>Epargne <i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Apport initial non utilisé et placé en banque"></i></td>
 											</tr>
 											<tr>
-												<td ng-bind="frais_location"></td>
-												<td>Frais location</td>
+												<td class="red">{{-loyer| customCurrency}}</td>
+												<td>Frais de location <i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Frais d'agence équivalent à un mois de loyer"></i></td>
 											</tr>
 											<tr>
-												<td ></td>
-												<td>Frais courants</td>
+												<td></td>
+												<td>Frais courants <i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Pas de frais courants en location qui ne seraient pas également imputable à un propriétaire occupant!"></i></td>
 											</tr>
 											<tr class="active">
-												<td ng-bind="delta_location"></td>
+												<td ng-class="{'red': delta_location < 0}">{{delta_location | customCurrency}}</td>
 												<td>Total</td>
 											</tr>																									
 										</tbody>
@@ -212,15 +237,15 @@
 								</div>								
 							</div>
 							<div class="row">
-								<form role="form" class="form-horizontal">
-									<div class="form-group">
-									    <label class="col-sm-4 control-label">Equivalent loyer</label>
-									    <div class="col-sm-6 input-group">
-											<input class="form-control" type="number" ng-model="loyer">
-											<span class="input-group-addon">€</span>
+								<div class="col-md-4 col-md-offset-4" style="text-align:center">
+									<form role="form" class="form">
+										<div class="form-group">
+										    <label control-label">Si vous pouvez louer le même appartement pour moins de ... </label>
+											<h2><span class="label label-info">{{loyer}} €/mois</span></h2>
+											<label control-label">...alors louer est plus rentable</label>
 										</div>
-									</div>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					
