@@ -1,51 +1,47 @@
 
 var app = angular.module('arbitrage',['ui.bootstrap']);
 
+//filtre sur chiffre en euros
 app.filter("customCurrency", function (numberFilter){
-		    function isNumeric(value)
-		    {
-		      return (!isNaN(parseFloat(value)) && isFinite(value));
-		    }
-
-		    return function (inputNumber, currencySymbol, decimalSeparator, thousandsSeparator, decimalDigits) {
-		      if (isNumeric(inputNumber))
-		      {
-		        // Default values for the optional arguments
-		        currencySymbol = (typeof currencySymbol === "undefined") ? "€" : currencySymbol;
-		        decimalSeparator = (typeof decimalSeparator === "undefined") ? "," : decimalSeparator;
-		        thousandsSeparator = (typeof thousandsSeparator === "undefined") ? " " : thousandsSeparator;
-		        decimalDigits = (typeof decimalDigits === "undefined" || !isNumeric(decimalDigits)) ? 0 : decimalDigits;
-
-		        if (decimalDigits < 0) decimalDigits = 0;
-
-		        // Format the input number through the number filter
-		        // The resulting number will have "," as a thousands separator
-		        // and "." as a decimal separator.
-		        var formattedNumber = numberFilter(inputNumber, decimalDigits);
-
-		        // Extract the integral and the decimal parts
-		        var numberParts = formattedNumber.split(".");
-
-		        // Replace the "," symbol in the integral part
-		        // with the specified thousands separator.
-		        numberParts[0] = numberParts[0].split(",").join(thousandsSeparator);
-
-		        // Compose the final result
-		        var result = currencySymbol +' '+ numberParts[0];
-
-		        if (numberParts.length == 2)
-		        {
-		          result += decimalSeparator + numberParts[1];
-		        }
-
-		        return result;
-		      }
-		      else
-		      {
-		        return inputNumber;
-		      }
-		    };
-		  });
+	function isNumeric(value){
+	  return (!isNaN(parseFloat(value)) && isFinite(value));
+	}
+	return function (inputNumber, currencySymbol, decimalSeparator, thousandsSeparator, decimalDigits) {
+		if (isNumeric(inputNumber)){
+			// Default values for the optional arguments
+			currencySymbol = (typeof currencySymbol === "undefined") ? "€" : currencySymbol;
+			decimalSeparator = (typeof decimalSeparator === "undefined") ? "," : decimalSeparator;
+			thousandsSeparator = (typeof thousandsSeparator === "undefined") ? " " : thousandsSeparator;
+			decimalDigits = (typeof decimalDigits === "undefined" || !isNumeric(decimalDigits)) ? 0 : decimalDigits;
+	
+			if (decimalDigits < 0) decimalDigits = 0;
+	
+			// Format the input number through the number filter
+			// The resulting number will have "," as a thousands separator
+			// and "." as a decimal separator.
+			var formattedNumber = numberFilter(inputNumber, decimalDigits);
+	
+			// Extract the integral and the decimal parts
+			var numberParts = formattedNumber.split(".");
+	
+			// Replace the "," symbol in the integral part
+			// with the specified thousands separator.
+			numberParts[0] = numberParts[0].split(",").join(thousandsSeparator);
+	
+			// Compose the final result
+			var result = currencySymbol +' '+ numberParts[0];
+	
+	        if (numberParts.length == 2){
+	          result += decimalSeparator + numberParts[1];
+	        }
+	
+	        return result;
+	        
+		}else{
+	        return inputNumber;
+		}
+	};
+});
 
 app.controller('EstimCtrl', function ($scope){
 	
@@ -66,12 +62,11 @@ app.controller('EstimCtrl', function ($scope){
 	$scope.loyer ="";
 	
 	
+	//fonction calculant les Net Present Value du Tableau et le loyer équivalent
 	$scope.getNpv = function(){
 		var montant_emprunte =(1-$scope.apport/100)*($scope.prix);
 		var apport_initial = ($scope.apport/100)*$scope.prix;
-		// on emprunte le 1er janvier 2010 et on paie le 1er janvier 2011 les premiers interets sur la totalité du montant + la premiere tranche de remboursement
-		
-		
+
 		//calcul d'une échéance annuelle fixe composé des intérêts et du remboursement du capital facial
 		var echeance = montant_emprunte*($scope.taux_pret/100)*Math.pow((1+$scope.taux_pret/100),$scope.duree_pret)/(Math.pow((1+$scope.taux_pret/100),$scope.duree_pret)-1);
 		//fonction remboursement des interets 
@@ -99,7 +94,7 @@ app.controller('EstimCtrl', function ($scope){
 		    npv_remboursement_facial += (capital(i))/(Math.pow((1+$scope.taux_inflation/100),j));
 		    remboursement_facial += (capital(i));
 		}
-		// cela vaut 0 si duree_pret=duree_detention en supposant qu'il n'y a pas de penalités pour remboursement anticipé
+		// remboursement anticipe vaut 0 si duree_pret=duree_detention en supposant qu'il n'y a pas de penalités pour remboursement anticipé
 		var npv_remboursement_anticipe = (montant_emprunte-remboursement_facial)/Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention);
 		var npv_prix_revente = $scope.prix*Math.pow((1+$scope.croissance_prix/100),$scope.duree_detention)/Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention);
 	    $scope.npv_prix=-apport_initial-npv_remboursement_facial-npv_remboursement_anticipe+npv_prix_revente;
@@ -113,12 +108,12 @@ app.controller('EstimCtrl', function ($scope){
 	    //total achat
 	    $scope.delta_achat = $scope.npv_interet+$scope.npv_prix+$scope.frais_achat+$scope.frais_courant;
 	    
-	    //epargne + interet actualisé
+	    //epargne intiale + interet actualisé
 	    var npv_epargne = 0;
 		npv_epargne = apport_initial*Math.pow((1+$scope.taux_rendement/100),$scope.duree_detention)/Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention);   
 	    $scope.npv_epargne=npv_epargne;
 	    
-	    //on fixe le flux actualisé pour matcher achatvs location et on recalcule le loyer équivalent à partir du flux
+	    //on fixe le flux actualisé de loyer pour matcher achat vs location et on recalcule le loyer équivalent à partir du flux
 	    var npv_loyer = 0;
 	    var multiple = 0;
     	$scope.npv_loyer= $scope.delta_achat-$scope.npv_epargne;
@@ -127,14 +122,12 @@ app.controller('EstimCtrl', function ($scope){
 		}
 		$scope.loyer = -Math.round($scope.npv_loyer/multiple/12);
 	    
-	    
-	    //total achat
+	    //total location
 	    $scope.delta_location = $scope.npv_loyer+$scope.npv_epargne;
-	    
-	    //deltat achat vs location
-	    $scope.delta = $scope.delta_achat-$scope.delta_location;
-	    
+	      
 	}
+	
+	//fonction remplissant les scenarios de taux à la place de l'utilisateur
 	$scope.getScenario= function(id){
 		if(id=="3"){
 			$scope.taux_inflation = 1.7;
@@ -152,8 +145,11 @@ app.controller('EstimCtrl', function ($scope){
 			$scope.taux_rendement = 2;
 			$scope.croissance_loyer = 1;
 		}
+		//on reactualise les valeurs
 		$scope.getNpv();
 	}
+	
+	//initialisation
 	$scope.getNpv();
 
 });

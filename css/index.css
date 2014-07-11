@@ -16,3 +16,15 @@ input::-webkit-inner-spin-button {
 .red{
 	color:red;
 }
+
+#panneau_fixe{
+	position:fixed;
+	left:42%;
+}
+
+@media (max-width: 768px) {
+  #panneau_fixe {
+    position:relative !important;
+    left:0% !important;
+  }
+}
