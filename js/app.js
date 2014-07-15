@@ -50,7 +50,7 @@ app.controller('EstimCtrl', function ($scope){
 	$scope.duree_detention = 20;
 	$scope.apport = 30;
 	$scope.duree_pret = 20;
-	$scope.taux_pret = 3.4;
+	$scope.taux_pret = 2.95;
 	$scope.taux_inflation = 1;
 	$scope.croissance_prix = 1;
 	$scope.taux_rendement = 2;
