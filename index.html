@@ -174,11 +174,11 @@
 							En location, nous avons supposé que les loyers progressaient comme l'indice des loyers courants, sans retenir 
 							l'effet d'un éventuel encadrement des loyers d'une part, ou l'augmentation de loyer en cas de changement d'appartement d'autre part.
 							Nous avons également négligé la perte due à l'immobilisation sans intérêt du dépôt de garantie.<br/><br/>
-							L'estimateur compare les valeurs nettes actualisées de l'achat ou de la location d'un bien immobilier, sans valoriser le risque
+							L'estimateur compare les flux de l'achat ou de la location d'un bien immobilier, sans valoriser le risque
 							inhérent à l'achat : en effet pour un coût total moyen équivalent, les variations potentielles à la baisse ou à la hausse sont beaucoup
 							plus forts en cas d'achat. En d'autres termes au loyer équivalent vous ne prenez aucun risque, alors qu'acheter implique une opportunité 
 							de plus-value mais également un risque important de perte.<br/><br/>
-							Enfin nous n'avons pas valorisé le caractère "disciplinant" d'un emprunt qui vous force à épargner. Nous avons donc considéré que le surplus disponible entre loyer et échéance de prêt est dépensé ou placé sans intérêt. Les partisans de la location répondront 
+							Enfin nous n'avons pas valorisé le caractère "disciplinant" d'un emprunt qui vous force à épargner. Nous avons considéré que le surplus disponible entre loyer et échéance était placé au taux sans risque mais en pratique rie ne vous oblige à épargner autant dans le cas de la location. Les partisans de la location répondront 
 							que cette liberté d'épargner permet également de saisir plus facilement des opportunités d'investissement ou de carrières, comme une création d'entreprise par exemple. 
 
 						</div>
@@ -201,7 +201,7 @@
 											</tr>
 											<tr>
 												<td><i class="fa fa-info-circle" tooltip-placement="top" 
-												tooltip="Revente du bien moins le capital restant dû à la banque, 
+												tooltip="Prix de revente du bien moins le capital restant dû à la banque, 
 												la part des mensualités remboursant le capital emprunté, l'apport initial à l'achat"></i> Plus-value</td>
 												<td ng-class="{'red': npv_prix < 0}">{{npv_prix | customCurrency}}</td>
 											</tr>
@@ -238,19 +238,19 @@
 											</tr>
 											<tr>
 												<td ng-class="{'red': npv_epargne < 0}">{{npv_epargne | customCurrency}}</td>
-												<td>Epargne <i class="fa fa-info-circle" tooltip-placement="top" 
+												<td>Intérêts apport initial <i class="fa fa-info-circle" tooltip-placement="top" 
 												tooltip="Intérêt de l'apport intial épargné"></i></td>
+											</tr>
+											<tr>
+												<td ng-class="{'red': npv_pouvoir < 0}">{{npv_pouvoir | customCurrency}}</td>
+												<td>Intérêts épargne <i class="fa fa-info-circle" tooltip-placement="top" 
+												tooltip="Le loyer étant inférieur à l'échéance du prêt,vous pouvez placer en banque le surplus d'épargne"></i></td>
 											</tr>
 											<tr>
 												<td class="red">{{-loyer| customCurrency}}</td>
 												<td>Frais de location <i class="fa fa-info-circle" tooltip-placement="top" 
 												tooltip="Frais d'agence équivalent à un mois de loyer"></i></td>
-											</tr>
-											<tr>
-												<td></td>
-												<td>Frais courants <i class="fa fa-info-circle" tooltip-placement="top" 
-												tooltip="Pas de frais courants en location qui ne seraient pas également imputable à un propriétaire occupant!"></i></td>
-											</tr>
+											</tr>											
 											<tr class="active">
 												<td ng-class="{'red': delta_location < 0}">{{delta_location | customCurrency}}</td>
 												<td>Total</td>
