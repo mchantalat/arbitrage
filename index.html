@@ -13,7 +13,7 @@
 		<script src="js/app.js"></script>
 		<script src="js/ui-bootstrap-tpls-0.11.0.js"></script>
 	</head>
-	<body ng-app="arbitrage">
+	<body ng-app="arbitrage" ng-controller="EstimCtrl">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
 		    	<div class="navbar-header">
@@ -25,11 +25,14 @@
 			      	</button>
 			      	<a class="navbar-brand" href="#">Acheter ou louer</a>	
 		    	</div>
+		    	<ul class="nav navbar-nav navbar-right">
+        			<li><a href="mailto:{{adresse_contact}}">Vous souhaitez intégrer ce simulateur à votre site ? Contactez-nous à l'adresse suivante <span class="label label-warning" style="font-size:18px">{{adresse_contact}}</span></a></li>
+        		</ul>
 			</div>
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-12" ng-controller="EstimCtrl">
+				<div class="col-sm-12">
 					<div class="row">
 						<div class="col-sm-5 col-xs-12">
 							<form role="form" class="form-horizontal">
@@ -58,6 +61,7 @@
 										<input class="form-control" type="number" ng-model="apport" ng-change="getNpv()">
 										<span class="input-group-addon">%</span>
 									</div>
+									<span class="help-block col-sm-6 col-sm-offset-5"> soit un apport initial de {{apport_initial | customCurrency}}</span>
 								</div>
 								<div class="form-group">
 								    <label class="col-sm-6 control-label">Durée prêt</label>
@@ -85,7 +89,7 @@
 							  			<input type="radio" name="options" checked>Scénario 1
 						  			</label>
 								  	<label class="btn btn-primary active" ng-click="getScenario(2)" tooltip-placement="top" 
-								    tooltip="Scénario 1 avec stabilisation des prix après une baisse passagère entre 2012 et 2014">
+								    tooltip="Tendance 2012-2014 avec stabilisation des prix après une baisse passagère entre 2012 et 2014">
 								    	<input type="radio" name="options">Scénario 2
 							    	</label>
 								  	<label class="btn btn-primary" ng-click="getScenario(3)" tooltip-placement="left" 
@@ -166,6 +170,7 @@
 							<h2 class="page-header">Principales hypothèses</h2>
 							Le crédit est à taux fixe, non négociable, sans pénalités en cas de remboursement anticipé.<br/><br/>
 							Les optimisations fiscales éventuelles d'un achat ou d'un investissement locatif ne sont pas prises en compte.<br/><br/>
+							La plus-value de cession est exonérée (cas d'une résidence principale).<br/><br>
 							En location, nous avons supposé que les loyers progressaient comme l'indice des loyers courants, sans retenir 
 							l'effet d'un éventuel encadrement des loyers d'une part, ou l'augmentation de loyer en cas de changement d'appartement d'autre part.
 							Nous avons également négligé la perte due à l'immobilisation sans intérêt du dépôt de garantie.<br/><br/>
@@ -173,7 +178,7 @@
 							inhérent à l'achat : en effet pour un coût total moyen équivalent, les variations potentielles à la baisse ou à la hausse sont beaucoup
 							plus forts en cas d'achat. En d'autres termes au loyer équivalent vous ne prenez aucun risque, alors qu'acheter implique une opportunité 
 							de plus-value mais également un risque important de perte.<br/><br/>
-							Enfin nous n'avons pas valorisé le caractère "disciplinant" d'un emprunt qui vous force à épargner. Les partisans de la location répondront 
+							Enfin nous n'avons pas valorisé le caractère "disciplinant" d'un emprunt qui vous force à épargner. Nous avons donc considéré que le surplus disponible entre loyer et échéance de prêt est dépensé ou placé sans intérêt. Les partisans de la location répondront 
 							que cette liberté d'épargner permet également de saisir plus facilement des opportunités d'investissement ou de carrières, comme une création d'entreprise par exemple. 
 
 						</div>
@@ -196,7 +201,7 @@
 											</tr>
 											<tr>
 												<td><i class="fa fa-info-circle" tooltip-placement="top" 
-												tooltip="Calculée en sommant le prix de revente du bien et en retrachant le capital restant dû à la banque, 
+												tooltip="Revente du bien moins le capital restant dû à la banque, 
 												la part des mensualités remboursant le capital emprunté, l'apport initial à l'achat"></i> Plus-value</td>
 												<td ng-class="{'red': npv_prix < 0}">{{npv_prix | customCurrency}}</td>
 											</tr>
@@ -234,7 +239,7 @@
 											<tr>
 												<td ng-class="{'red': npv_epargne < 0}">{{npv_epargne | customCurrency}}</td>
 												<td>Epargne <i class="fa fa-info-circle" tooltip-placement="top" 
-												tooltip="Apport initial non utilisé et placé en banque"></i></td>
+												tooltip="Intérêt de l'apport intial épargné"></i></td>
 											</tr>
 											<tr>
 												<td class="red">{{-loyer| customCurrency}}</td>
@@ -254,13 +259,13 @@
 									</table>
 								</div>								
 							</div>
-							<div class="row">
+							<div class="row" id="result">
 								<div class="col-md-4 col-md-offset-4" style="text-align:center">
 									<form role="form" class="form">
 										<div class="form-group">
-										    <label control-label">Si vous pouvez louer le même appartement pour moins de ... </label>
-											<h2 style="margin-top:0px"><span class="label label-info">{{loyer}} €/mois</span></h2>
-											<label control-label">...alors louer est plus rentable</label>
+										    <label class="control-label">{{text_result_1}}</label>
+											<h2 style="margin-top:0px"><span ng-class="{'label label-info': loyer>0 , 'label label-default' : loyer<0 }">{{loyer}} €/mois</span></h2>
+											<label class="control-label">{{text_result_2}}</label>
 										</div>
 									</form>
 								</div>

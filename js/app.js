@@ -44,7 +44,10 @@ app.filter("customCurrency", function (numberFilter){
 });
 
 app.controller('EstimCtrl', function ($scope){
-	
+	//adresse contact en js
+	$scope.adresse_contact = "contact@smartloc.fr";
+
+
 	//valeurs par défaut
 	$scope.prix = 400000;
 	$scope.duree_detention = 20;
@@ -66,6 +69,7 @@ app.controller('EstimCtrl', function ($scope){
 	$scope.getNpv = function(){
 		var montant_emprunte =(1-$scope.apport/100)*($scope.prix);
 		var apport_initial = ($scope.apport/100)*$scope.prix;
+		$scope.apport_initial = apport_initial;
 
 		//calcul d'une échéance annuelle fixe composé des intérêts et du remboursement du capital facial
 		var echeance = montant_emprunte*($scope.taux_pret/100)*Math.pow((1+$scope.taux_pret/100),$scope.duree_pret)/(Math.pow((1+$scope.taux_pret/100),$scope.duree_pret)-1);
@@ -82,7 +86,7 @@ app.controller('EstimCtrl', function ($scope){
 		
 		//flux actualisé des intérêts remboursés pendant la periode de détention
 		var npv_interet = 0;
-		for (i = 1; i <= $scope.duree_detention; i++) {
+		for (i = 1; i <= Math.min($scope.duree_detention,$scope.duree_pret); i++) {
 		    npv_interet += (interet(i))/(Math.pow((1+$scope.taux_inflation/100),i));
 		}
 	    $scope.npv_interet=-npv_interet;
@@ -90,7 +94,7 @@ app.controller('EstimCtrl', function ($scope){
 	    //delta revente = montant apporté - flux actualisé du remboursement capital facial + revente appart - remboursement anticipé du restant du le cas échéant
 		var npv_remboursement_facial = 0;
 		var remboursement_facial = 0;
-		for (j = 1; j <= $scope.duree_detention; j++) {
+		for (j = 1; j <= Math.min($scope.duree_detention,$scope.duree_pret); j++) {
 		    npv_remboursement_facial += (capital(i))/(Math.pow((1+$scope.taux_inflation/100),j));
 		    remboursement_facial += (capital(i));
 		}
@@ -108,9 +112,9 @@ app.controller('EstimCtrl', function ($scope){
 	    //total achat
 	    $scope.delta_achat = $scope.npv_interet+$scope.npv_prix+$scope.frais_achat+$scope.frais_courant;
 	    
-	    //epargne intiale + interet actualisé
+	    //epargne + interet actualisés - epargne initiale 
 	    var npv_epargne = 0;
-		npv_epargne = apport_initial*Math.pow((1+$scope.taux_rendement/100),$scope.duree_detention)/Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention);   
+		npv_epargne = apport_initial*Math.pow((1+$scope.taux_rendement/100),$scope.duree_detention)/Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention)-apport_initial;   
 	    $scope.npv_epargne=npv_epargne;
 	    
 	    //on fixe le flux actualisé de loyer pour matcher achat vs location et on recalcule le loyer équivalent à partir du flux
@@ -121,6 +125,14 @@ app.controller('EstimCtrl', function ($scope){
 		    multiple += Math.pow((1+$scope.croissance_loyer/100),$scope.duree_detention)/(Math.pow((1+$scope.taux_inflation/100),k));   
 		}
 		$scope.loyer = -Math.round($scope.npv_loyer/multiple/12);
+
+		if ($scope.loyer>=0){
+			$scope.text_result_1="Si vous pouvez louer le même appartement pour moins de ... ";
+			$scope.text_result_2="... alors louer est plus rentable";
+		}else{
+			$scope.text_result_1="Acheter est plus rentable que louer ...";
+			$scope.text_result_2="... même si vous louez gratuitement";
+		}
 	    
 	    //total location
 	    $scope.delta_location = $scope.npv_loyer+$scope.npv_epargne;
