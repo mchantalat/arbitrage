@@ -105,8 +105,13 @@ app.controller('EstimCtrl', function ($scope){
 	    $scope.frais_achat = -$scope.prix*(($scope.frais_agence/100)+($scope.frais_notaire/100))/(1+$scope.frais_agence/100);
 	    
 	    //les charges courantes croient comme l'inflation
-	    $scope.frais_courant = -$scope.prix*($scope.charge_fonciere+$scope.charge_copro)*((Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention)-1)/($scope.taux_inflation/100))/100;
+	    if($scope.taux_inflation=="0"){
+	    	 $scope.frais_courant = -$scope.prix*($scope.charge_fonciere+$scope.charge_copro)*$scope.duree_detention/100;
+	    }else{
+	    	$scope.frais_courant = -$scope.prix*($scope.charge_fonciere+$scope.charge_copro)*((Math.pow((1+$scope.taux_inflation/100),$scope.duree_detention)-1)/($scope.taux_inflation/100))/100;
+	    }
 	    
+
 	    //total achat
 	    $scope.delta_achat = $scope.npv_interet+$scope.npv_prix+$scope.frais_achat+$scope.frais_courant;
 	    
@@ -126,7 +131,8 @@ app.controller('EstimCtrl', function ($scope){
 
 		//on affiche les interets du pouvoir d'achat supplémentaire placé
 		var npv_pouvoir = 0;
-		npv_pouvoir = ($scope.taux_rendement/100)*Math.min($scope.duree_detention,$scope.duree_pret)*Math.min($scope.duree_detention,$scope.duree_pret)*(echeance-loyer)/2;
+		npv_pouvoir = ($scope.taux_rendement/100)*Math.min($scope.duree_detention,$scope.duree_pret)*
+		Math.min($scope.duree_detention,$scope.duree_pret)*(echeance-loyer)/2;
 		$scope.npv_pouvoir = npv_pouvoir;
 
 		//on affiche le flux de loyers correspondants
